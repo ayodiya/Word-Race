@@ -1,10 +1,5 @@
 import React from 'react'
-import Button from '@mui/material/Button'
-import Dialog from '@mui/material/Dialog'
 import Box from '@mui/material/Box'
-import DialogActions from '@mui/material/DialogActions'
-import DialogContent from '@mui/material/DialogContent'
-import DialogTitle from '@mui/material/DialogTitle'
 import Table from '@mui/material/Table'
 import TableBody from '@mui/material/TableBody'
 import TableCell from '@mui/material/TableCell'
@@ -12,33 +7,33 @@ import TableContainer from '@mui/material/TableContainer'
 import TableHead from '@mui/material/TableHead'
 import TableRow from '@mui/material/TableRow'
 
+import DialogComponent from './DialogComponent'
+
 const TableHeaderStyle = {
-  width: 10,
   color: 'white',
   fontWeight: 'bold'
 }
 
 const TableCellStyle = {
-  width: 10,
   color: 'white',
   fontWeight: 'bold',
   border: 0
 }
-function createData (no, name, hs, level, gp) {
-  return { no, name, hs, level, gp }
+function createData (no, name, hs) {
+  return { no, name, hs }
 }
 
 const rows = [
-  createData(1, 'bola', 340, 2, 20),
-  createData(1, 'bola', 340, 2, 20),
-  createData(1, 'bola', 340, 2, 20),
-  createData(1, 'bola', 340, 2, 20),
-  createData(1, 'bola', 340, 2, 20),
-  createData(1, 'bola', 340, 2, 20),
-  createData(1, 'bola', 340, 2, 20),
-  createData(1, 'bola', 340, 2, 20),
-  createData(1, 'bola', 340, 2, 20),
-  createData(10, 'bola', 340, 2, 20)
+  createData(1, 'bola', 340),
+  createData(1, 'bola', 340),
+  createData(1, 'bola', 340),
+  createData(1, 'bola', 340),
+  createData(1, 'bola', 340),
+  createData(1, 'bola', 340),
+  createData(1, 'bola', 340),
+  createData(1, 'bola', 340),
+  createData(1, 'bola', 340),
+  createData(10, 'bola', 340)
 ]
 
 const Leaderboard = ({ openLeaderboard, handleClose }) => {
@@ -55,29 +50,13 @@ const Leaderboard = ({ openLeaderboard, handleClose }) => {
 
   return (
     <Box>
-      <Dialog
+      <DialogComponent
         open={openLeaderboard}
-        onClose={handleClose}
-        scroll='paper'
-        sx={{
-          '& .MuiPaper-root': {
-            backgroundColor: 'backgroundColor.light',
-            borderRadius: '10px'
-          }
-        }}
-      >
-        <DialogTitle
-          sx={{
-            color: 'white',
-            fontWeight: 'bold',
-            backgroundColor: 'backgroundColor.dark'
-          }}
-        >
-          Leaderboard(Top Ten)
-        </DialogTitle>
-        <DialogContent dividers={true}>
-          <TableContainer>
-            <Table sx={{ minWidth: 250 }} aria-label='simple table'>
+        close={handleClose}
+        title='Leaderboard(Top Ten)'
+        content={
+          <TableContainer sx={{ display: 'flex', justifyContent: 'center' }}>
+            <Table sx={{ width: 150 }} aria-label='simple table'>
               <TableHead>
                 <TableRow>
                   <TableCell sx={TableHeaderStyle}>No</TableCell>
@@ -87,18 +66,11 @@ const Leaderboard = ({ openLeaderboard, handleClose }) => {
                   <TableCell
                     align='right'
                     sx={{
-                      width: 10,
                       color: 'white',
                       fontWeight: 'bold'
                     }}
                   >
                     HS
-                  </TableCell>
-                  <TableCell align='right' sx={TableHeaderStyle}>
-                    Level
-                  </TableCell>
-                  <TableCell align='right' sx={TableHeaderStyle}>
-                    GP
                   </TableCell>
                 </TableRow>
               </TableHead>
@@ -115,27 +87,13 @@ const Leaderboard = ({ openLeaderboard, handleClose }) => {
                     <TableCell align='right' sx={TableCellStyle}>
                       {row.hs}
                     </TableCell>
-                    <TableCell align='right' sx={TableCellStyle}>
-                      {row.level}
-                    </TableCell>
-                    <TableCell align='right' sx={TableCellStyle}>
-                      {row.gp}
-                    </TableCell>
                   </TableRow>
                 ))}
               </TableBody>
             </Table>
           </TableContainer>
-        </DialogContent>
-        <DialogActions>
-          <Button
-            onClick={handleClose}
-            sx={{ color: 'white', fontWeight: 'bold' }}
-          >
-            Close
-          </Button>
-        </DialogActions>
-      </Dialog>
+        }
+      />
     </Box>
   )
 }

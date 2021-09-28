@@ -1,9 +1,11 @@
 import { createTheme } from '@mui/material/styles'
 export const theme = createTheme({
   palette: {
-    ButtonColor: {
-      success: '#1ECE95',
-      danger: '#D8437C'
+    buttonSuccess: {
+      main: '#1ECE95'
+    },
+    buttonDanger: {
+      main: '#D8437C'
     },
     backgroundColor: {
       main: '#4310C8',

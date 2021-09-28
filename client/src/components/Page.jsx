@@ -4,7 +4,7 @@ const Page = ({ children, ...props }) => {
   return (
     <Box
       sx={{
-        padding: '50px 0 0 100px',
+        padding: '0px 0 0 100px',
         backgroundColor: 'backgroundColor.main',
         minHeight: '100vh',
         minWidth: '100wh',
