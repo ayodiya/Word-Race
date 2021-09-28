@@ -1,12 +1,10 @@
 import React from 'react'
 import Button from '@mui/material/Button'
-import Dialog from '@mui/material/Dialog'
 import Box from '@mui/material/Box'
-import DialogActions from '@mui/material/DialogActions'
-import DialogContent from '@mui/material/DialogContent'
 import DialogContentText from '@mui/material/DialogContentText'
-import DialogTitle from '@mui/material/DialogTitle'
 import Typography from '@mui/material/Typography'
+
+import DialogComponent from './DialogComponent'
 
 const Help = ({ openHelp, handleClose }) => {
   const descriptionElementRef = React.useRef(null)
@@ -21,27 +19,19 @@ const Help = ({ openHelp, handleClose }) => {
 
   return (
     <Box>
-      <Dialog
+      <DialogComponent
+        title='Help'
         open={openHelp}
-        onClose={handleClose}
-        scroll='paper'
-        sx={{
-          '& .MuiPaper-root': {
-            backgroundColor: 'backgroundColor.light',
-            borderRadius: '10px'
-          }
-        }}
-      >
-        <DialogTitle
-          sx={{
-            color: 'white',
-            fontWeight: 'bold',
-            backgroundColor: 'backgroundColor.dark'
-          }}
-        >
-          Help
-        </DialogTitle>
-        <DialogContent dividers={true}>
+        close={handleClose}
+        actionButtons={
+          <Button
+            onClick={handleClose}
+            sx={{ color: 'white', fontWeight: 'bold' }}
+          >
+            Close
+          </Button>
+        }
+        content={
           <DialogContentText
             component='div'
             ref={descriptionElementRef}
@@ -58,16 +48,8 @@ const Help = ({ openHelp, handleClose }) => {
               every word the player types correctly and resets on any mistype
             </Typography>
           </DialogContentText>
-        </DialogContent>
-        <DialogActions>
-          <Button
-            onClick={handleClose}
-            sx={{ color: 'white', fontWeight: 'bold' }}
-          >
-            Close
-          </Button>
-        </DialogActions>
-      </Dialog>
+        }
+      />
     </Box>
   )
 }
