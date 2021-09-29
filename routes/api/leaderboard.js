@@ -11,10 +11,7 @@ const Leaderboard = require('../../models/Leaderboard')
 router.post(
   '/',
   check('name', 'Name is required').notEmpty(),
-  check('numberOfGamesPlayed', 'Number of games played is required').notEmpty(),
-  check('averageScore', 'Average score is required').notEmpty(),
   check('highestScore', 'Highest score is required').notEmpty(),
-  check('maxLevelReached', 'Max level reached is required').notEmpty(),
   async (req, res) => {
     const errors = validationResult(req)
     if (!errors.isEmpty()) {
@@ -23,10 +20,7 @@ router.post(
 
     const {
       name,
-      numberOfGamesPlayed,
-      averageScore,
       highestScore,
-      maxLevelReached
     } = req.body
 
     try {
@@ -38,11 +32,8 @@ router.post(
       }
 
       const leaderboard = await new Leaderboard({
-        name,
-        numberOfGamesPlayed,
-        averageScore,
+        username,
         highestScore,
-        maxLevelReached
       }).save()
 
       res.status(200).json(leaderboard)
