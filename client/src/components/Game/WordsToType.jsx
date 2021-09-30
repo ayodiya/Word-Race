@@ -66,7 +66,7 @@ const WordsToType = () => {
     if (insertedText === word) {
       setWordIndex(++index)
       setWord(words[index])
-      setMultiplier(++scoreMultiplier)
+      setMultiplier(0.5 + scoreMultiplier)
       setStrIndex((stringIndex = 0))
       updateScore()
       setTimeLeft(timeLeft + 2)
