@@ -1,8 +1,9 @@
-import { useEffect, useState, Fragment } from 'react'
 import Box from '@mui/material/Box'
 import Paper from '@mui/material/Paper'
 import TextField from '@mui/material/TextField'
+import randomWords from 'random-words'
 import { styled } from '@mui/material/styles'
+import { useEffect, useState } from 'react'
 
 import GameOverDialog from './GameOverDialog'
 
@@ -16,38 +17,16 @@ const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: '#EFB512'
 }))
 
-const words = [
-  'banish',
-  'velvet',
-  'friend',
-  // 'consciousness',
-  'stage'
-  // 'variant',
-  // 'mind',
-  // 'veteran',
-  // 'conductor',
-  // 'equinox',
-  // 'eliminate',
-  // 'spine',
-  // 'offender',
-  // 'ideal',
-  // 'paradox',
-  // 'pollution',
-  // 'opposition',
-  // 'bear',
-  // 'power',
-  // 'reptile',
-  // 'metal',
-  // 'absence',
-  // 'unrest',
-  // 'distort'
-]
+const words = randomWords(20)
 
 let initialScore = 0
 let seconds = 10
 let scoreMultiplier = 0
 let index = 0
 let stringIndex = 0
+
+
+
 
 const WordsToType = () => {
   const [score, setScore] = useState(initialScore)
@@ -117,9 +96,9 @@ const WordsToType = () => {
 
   useEffect(() => {
     // exit early when we reach 0
-    if (!timeLeft) return
+    if (!timeLeft || wordIndex === words.length ) return setGameOver(true)
 
-    if (wordIndex === words.length) return setGameOver(true)
+   
 
     // save intervalId to clear the interval when the
     // component re-renders
