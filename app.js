@@ -4,6 +4,7 @@ const path = require('path')
 
 const connectDB = require('./config/db')
 
+// init express app
 const app = express()
 
 // Init Middleware
