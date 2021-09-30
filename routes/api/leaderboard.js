@@ -10,7 +10,7 @@ const Leaderboard = require('../../models/Leaderboard')
 
 router.post(
   '/',
-  check('name', 'Name is required').notEmpty(),
+  check('username', 'Name is required').notEmpty(),
   check('highestScore', 'Highest score is required').notEmpty(),
   async (req, res) => {
     const errors = validationResult(req)
@@ -19,13 +19,13 @@ router.post(
     }
 
     const {
-      name,
+      username,
       highestScore,
     } = req.body
 
     try {
-      let user = await Leaderboard.findOne({ name })
-      console.log(user)
+      let user = await Leaderboard.findOne({ username })
+      
 
       if (user) {
         return res.status(400).json({ errors: [{ msg: 'Name already exist' }] })
@@ -36,9 +36,8 @@ router.post(
         highestScore,
       }).save()
 
-      res.status(200).json(leaderboard)
+      res.status(200).send('Data saved successfully ')
     } catch (err) {
-      console.error(err.message)
       res.status(500).send('Server Error')
     }
   }
@@ -53,7 +52,6 @@ router.get('/', async (req, res) => {
     const leaderboard = await Leaderboard.find().sort([['highestScore', -1]])
     res.status(200).json(leaderboard)
   } catch (err) {
-    console.error(err.message)
     res.status(500).send('Server Error')
   }
 })
