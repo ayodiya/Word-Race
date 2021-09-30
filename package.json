@@ -11,7 +11,7 @@
     "start": "node app.js",
     "app": "nodemon app.js",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "heroku-postbuild": "cd client && yarn add && yarn run build"
+    "heroku-postbuild": "cd client && yarn install && yarn run build"
   },
   "dependencies": {
     "config": "^3.3.6",
