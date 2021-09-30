@@ -2,10 +2,14 @@ import Box from '@mui/material/Box'
 import Paper from '@mui/material/Paper'
 import TextField from '@mui/material/TextField'
 import randomWords from 'random-words'
+import useSound from 'use-sound';
 import { styled } from '@mui/material/styles'
 import { useEffect, useState } from 'react'
 
 import GameOverDialog from './GameOverDialog'
+import successTypeSound from '../../asset/success-sound-effect.mp3'
+
+
 
 const Item = styled(Paper)(({ theme }) => ({
   ...theme.typography.body2,
@@ -36,6 +40,8 @@ const WordsToType = () => {
   const [word, setWord] = useState(words[index])
   const [multiplier, setMultiplier] = useState(0)
   const [gameOver, setGameOver] = useState(false)
+  
+  const [play] = useSound(successTypeSound)
 
   const statsItems = [
     {
@@ -52,22 +58,25 @@ const WordsToType = () => {
     }
   ]
 
+
+
   const onChange = e => {
     const insertedText = e.target.value
 
     setStrIndex(++stringIndex)
 
-    // setStrIndex()
-    // console.log(insertedText[strIndex])
+
     if (word[strIndex] !== insertedText[strIndex]) {
       setMultiplier(multiplier - multiplier, (scoreMultiplier = 0))
+     
     }
 
     if (insertedText === word) {
+      play()
       setWordIndex(++index)
       setWord(words[index])
-      setMultiplier(0.5 + scoreMultiplier)
-      setStrIndex((stringIndex = 0))
+      setMultiplier(++scoreMultiplier)
+      setStrIndex(stringIndex = 0)
       updateScore()
       setTimeLeft(timeLeft + 2)
       //clear
@@ -84,7 +93,7 @@ const WordsToType = () => {
   const updateScore = () => {
     setScore(prevscore =>
       prevscore === 0 || multiplier === 0
-        ? prevscore + 1
+        ? prevscore + 1 
         : (score + 1) * multiplier
     )
   }
