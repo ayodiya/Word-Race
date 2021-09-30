@@ -1,4 +1,4 @@
-import React from 'react'
+
 import Box from '@mui/material/Box'
 import Table from '@mui/material/Table'
 import TableBody from '@mui/material/TableBody'
@@ -6,6 +6,8 @@ import TableCell from '@mui/material/TableCell'
 import TableContainer from '@mui/material/TableContainer'
 import TableHead from '@mui/material/TableHead'
 import TableRow from '@mui/material/TableRow'
+import axios from 'axios'
+import { useState, useRef, useEffect } from 'react'
 
 import DialogComponent from './DialogComponent'
 
@@ -19,34 +21,33 @@ const TableCellStyle = {
   fontWeight: 'bold',
   border: 0
 }
-function createData (no, name, hs) {
-  return { no, name, hs }
-}
-
-const rows = [
-  createData(1, 'bola', 340),
-  createData(1, 'bola', 340),
-  createData(1, 'bola', 340),
-  createData(1, 'bola', 340),
-  createData(1, 'bola', 340),
-  createData(1, 'bola', 340),
-  createData(1, 'bola', 340),
-  createData(1, 'bola', 340),
-  createData(1, 'bola', 340),
-  createData(10, 'bola', 340)
-]
 
 const Leaderboard = ({ openLeaderboard, handleClose }) => {
-  const descriptionElementRef = React.useRef(null)
+  const descriptionElementRef = useRef(null)
+  const [leaderboard, setLeaderboard] = useState(Array)
 
-  React.useEffect(() => {
+
+
+  const getLeaderboard = async() => {
+    const res = await axios.get('/api/leaderboard')
+    setLeaderboard(res.data)
+  }
+
+  // getLeaderboard()
+
+  useEffect(() => {
     if (openLeaderboard) {
       const { current: descriptionElement } = descriptionElementRef
       if (descriptionElement !== null) {
         descriptionElement.focus()
       }
     }
+    getLeaderboard()
+
   }, [openLeaderboard])
+
+
+
 
   return (
     <Box>
@@ -59,7 +60,6 @@ const Leaderboard = ({ openLeaderboard, handleClose }) => {
             <Table sx={{ width: 150 }} aria-label='simple table'>
               <TableHead>
                 <TableRow>
-                  <TableCell sx={TableHeaderStyle}>No</TableCell>
                   <TableCell align='right' sx={TableHeaderStyle}>
                     Name
                   </TableCell>
@@ -75,20 +75,19 @@ const Leaderboard = ({ openLeaderboard, handleClose }) => {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {rows.map(row => (
+             { leaderboard.map(({_id, username, highestScore}) => (
                   <TableRow
-                    key={row.no}
+                    key={_id}
                     sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                   >
-                    <TableCell sx={TableCellStyle}>{row.no}</TableCell>
                     <TableCell align='right' sx={TableCellStyle}>
-                      {row.name}
+                      {username}
                     </TableCell>
                     <TableCell align='right' sx={TableCellStyle}>
-                      {row.hs}
+                      {highestScore}
                     </TableCell>
                   </TableRow>
-                ))}
+              ))}
               </TableBody>
             </Table>
           </TableContainer>

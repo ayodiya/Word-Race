@@ -1,16 +1,15 @@
-import * as React from 'react'
 import Dialog from '@mui/material/Dialog'
 import DialogActions from '@mui/material/DialogActions'
 import DialogContent from '@mui/material/DialogContent'
 import DialogTitle from '@mui/material/DialogTitle'
 
-export default function DialogComponent ({
+const DialogComponent =  ({
   title,
   content,
   actionButtons,
   open,
   close
-}) {
+}) => {
   return (
     <div>
       <Dialog
@@ -50,3 +49,5 @@ export default function DialogComponent ({
     </div>
   )
 }
+
+export default DialogComponent

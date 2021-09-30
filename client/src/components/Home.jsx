@@ -1,14 +1,14 @@
-import React from 'react'
 import Typography from '@mui/material/Typography'
 import Button from '@mui/material/Button'
 import Box from '@mui/material/Box'
 import { useHistory } from 'react-router-dom'
+import {useState} from 'react'
 
 import Help from './Help'
 import Page from './Page'
 
 const Home = () => {
-  const [openHelp, setOpenHelp] = React.useState(true)
+  const [openHelp, setOpenHelp] = useState(true)
   const { push } = useHistory()
 
   const handleCloseHelp = () => {
