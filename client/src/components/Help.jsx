@@ -1,14 +1,14 @@
-import React from 'react'
 import Button from '@mui/material/Button'
 import Box from '@mui/material/Box'
 import DialogContentText from '@mui/material/DialogContentText'
 import Typography from '@mui/material/Typography'
+import {useRef, useEffect} from 'react'
 
 import DialogComponent from './DialogComponent'
 
 const Help = ({ openHelp, handleClose }) => {
-  const descriptionElementRef = React.useRef(null)
-  React.useEffect(() => {
+  const descriptionElementRef = useRef(null)
+  useEffect(() => {
     if (openHelp) {
       const { current: descriptionElement } = descriptionElementRef
       if (descriptionElement !== null) {

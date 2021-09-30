@@ -1,4 +1,3 @@
-import React from 'react'
 import Box from '@mui/material/Box'
 import Drawer from '@mui/material/Drawer'
 import AppBar from '@mui/material/AppBar'
@@ -11,6 +10,7 @@ import GroupsSharpIcon from '@mui/icons-material/GroupsSharp'
 import InfoSharpIcon from '@mui/icons-material/InfoSharp'
 import { styled, useTheme } from '@mui/material/styles'
 import { useHistory } from 'react-router-dom'
+import {useState} from 'react'
 
 import Help from './Help'
 import Leaderboard from './Leaderboard'
@@ -27,8 +27,8 @@ const DrawerHeader = styled('div')(({ theme }) => ({
 const Navbar = () => {
   const theme = useTheme()
   const { push } = useHistory()
-  const [openHelp, setOpenHelp] = React.useState(false)
-  const [openLeaderboard, setOpenLeaderboard] = React.useState(false)
+  const [openHelp, setOpenHelp] = useState(false)
+  const [openLeaderboard, setOpenLeaderboard] = useState(false)
 
   const handleOpenHelp = () => {
     setOpenHelp(true)
