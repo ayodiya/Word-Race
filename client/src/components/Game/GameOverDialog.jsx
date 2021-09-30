@@ -61,7 +61,7 @@ const GameOverDialog = ({
     }
 
      
-  const res = await axios.post('http://localhost:8000/api/leaderboard', dataToSend)
+  const res = await axios.post('/api/leaderboard', dataToSend)
 
  setAlert({openAlert: true, severity:'success', alertMessage: res.data})
    
