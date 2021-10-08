@@ -2,14 +2,12 @@ import Box from '@mui/material/Box'
 import Paper from '@mui/material/Paper'
 import TextField from '@mui/material/TextField'
 import randomWords from 'random-words'
-import useSound from 'use-sound';
+import useSound from 'use-sound'
 import { styled } from '@mui/material/styles'
 import { useEffect, useState } from 'react'
 
 import GameOverDialog from './GameOverDialog'
 import successTypeSound from '../../asset/success-sound-effect.mp3'
-
-
 
 const Item = styled(Paper)(({ theme }) => ({
   ...theme.typography.body2,
@@ -17,20 +15,19 @@ const Item = styled(Paper)(({ theme }) => ({
   textAlign: 'center',
   color: 'white',
   fontWeight: 'bold',
-
+  display: 'flex',
+  flexDirection: 'row',
+  margin: '2px',
   backgroundColor: '#EFB512'
 }))
 
 const words = randomWords(20)
 
-let initialScore = 0
-let seconds = 10
+const initialScore = 0
+const seconds = 10
 let scoreMultiplier = 0
 let index = 0
 let stringIndex = 0
-
-
-
 
 const WordsToType = () => {
   const [score, setScore] = useState(initialScore)
@@ -40,8 +37,11 @@ const WordsToType = () => {
   const [word, setWord] = useState(words[index])
   const [multiplier, setMultiplier] = useState(0)
   const [gameOver, setGameOver] = useState(false)
-  
+  const [correctIndexInput, setCorrectIndexInput] = useState([])
+
   const [play] = useSound(successTypeSound)
+
+  const letters = word.split('')
 
   const statsItems = [
     {
@@ -58,28 +58,35 @@ const WordsToType = () => {
     }
   ]
 
-
-
   const onChange = e => {
     const insertedText = e.target.value
 
+    const wordLength = insertedText.length
+
     setStrIndex(++stringIndex)
 
+    document.addEventListener('keyup', (event) => {
+      const name = event.key
+
+      if (letters[wordLength - 1] === name) {
+        return correctIndexInput.push(wordLength - 1)
+      }
+    }, false)
 
     if (word[strIndex] !== insertedText[strIndex]) {
       setMultiplier(multiplier - multiplier, (scoreMultiplier = 0))
-     
     }
 
     if (insertedText === word) {
       play()
       setWordIndex(++index)
       setWord(words[index])
+      setCorrectIndexInput([])
       setMultiplier(++scoreMultiplier)
       setStrIndex(stringIndex = 0)
       updateScore()
       setTimeLeft(timeLeft + 2)
-      //clear
+      // clear
       e.target.value = ''
     }
   }
@@ -93,21 +100,14 @@ const WordsToType = () => {
   const updateScore = () => {
     setScore(prevscore =>
       prevscore === 0 || multiplier === 0
-        ? prevscore + 1 
+        ? prevscore + 1
         : (score + 1) * multiplier
     )
   }
 
-  /////////////////////////////////
-  //set the countdown
-
-  // initialize timeLeft with the seconds prop
-
   useEffect(() => {
     // exit early when we reach 0
-    if (!timeLeft || wordIndex === words.length ) return setGameOver(true)
-
-   
+    if (!timeLeft || wordIndex === words.length) return setGameOver(true)
 
     // save intervalId to clear the interval when the
     // component re-renders
@@ -150,7 +150,7 @@ const WordsToType = () => {
                 display: 'flex',
                 justifyContent: { md: 'center' },
                 color: 'white',
-                fontSize: '20px'
+                fontSize: { xs: '20px' }
               }}
             >
               {itemToDisplay}
@@ -165,7 +165,23 @@ const WordsToType = () => {
       >
         <Box sx={{ display: 'flex', justifyContent: 'center', flexGrow: 1 }}>
           <Box>
-            <Item sx={{ fontSize: { md: '30px' } }}>{word}</Item>
+            <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+              {letters.map((letter, index) =>
+                <Item
+                  sx={{
+                    fontSize: { md: '30px' },
+                    color: {
+                      xs: correctIndexInput.includes(index) ? 'green' : 'white'
+                    }
+
+                  }}
+                  key={index}
+                >
+                  {letter}
+                </Item>
+              )}
+
+            </Box>
             <Box
               sx={{
                 display: 'flex',
@@ -190,7 +206,7 @@ const WordsToType = () => {
                 (timeLeft === 0 ? { display: 'flex' } : { display: 'none' },
                 { flexDirection: 'column' })
               }
-            ></Box>
+            />
           </Box>
         </Box>
         <GameOverDialog
