@@ -49,7 +49,7 @@ router.post(
 
 router.get('/', async (req, res) => {
   try {
-    const leaderboard = await Leaderboard.find().sort([['highestScore', -1]])
+    const leaderboard = await Leaderboard.find().sort([['highestScore', -1]]).limit(10)
     res.status(200).json(leaderboard)
   } catch (err) {
     res.status(500).send('Server Error')
